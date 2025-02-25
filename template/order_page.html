@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Orders{% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="mb-4" style="text-align: center;">Recent Orders</h2>
+    <table class="table table-bordered table-striped" style="direction: ltr;">
+        <thead class="table-dark">
+            <tr>
+                <th>Order ID</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for orderby in ordersby %}
+            {% for order in orderby.ordered_set.all %}
+                <tr>
+                    {% if forloop.first %}
+                        <td rowspan="{{ orderby.ordered_set.count }}">
+                            ({{ forloop.parentloop.counter }})
+                            <p>{{orderby.date}}</p>
+                            <p>{{orderby.address}}</p>
+                        </td>
+                    {% endif %}
+                    <td>
+                        <a href="{% url 'product_overview' order.product.id %}" style="text-decoration: none;">
+                            {{ order.product.product_name }}
+                        </a>
+                    </td>
+                    <td>{{ order.quantity }}</td>
+                    <td>{{ order.product.product_price }}</td>
+                    {% if forloop.first %}
+                        <td rowspan="{{ orderby.ordered_set.count }}">{{ orderby.process|yesno:"✅,❌" }}</td>
+                        <td rowspan="{{ orderby.ordered_set.count }}">
+                            {% if orderby.process == False %}
+                            <form method="post" action="">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm" name="id" value="{{ orderby.id }}">Cancel Order</button>
+                            </form>
+                            {% else %}
+                                <h3>Order Placed</h3>
+                            {% endif %}
+
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}Wishlist{% endblock title %}
+{% block body %}
+
+<div class="product-section" style="padding: 20px; text-align: center;">
+  <h2>Your Wishlist</h2>
+  
+  {% if wishlist_products %}
+  {% for x in wishlist_products %}
+  <div class="card" style="display: inline-block; margin: 10px; border: 1px solid #ccc; border-radius: 5px; width: 300px;">
+    <a href="{% url 'product_overview' x.id %}">
+    <img src="/media/{{ x.product_image }}" alt="{{ x.product_name }}" style="width: 100%; height: auto; border-bottom: 1px solid #ccc;">
+    </a>
+    <div style="padding: 10px;">
+      <h3>{{ x.product_name }}</h3>
+      <p>Rs.{{ x.product_price }}</p>
+    </div>
+    <!-- Remove from Wishlist Button -->
+    <button class="remove-button" onclick="removeFromWishlist('{{ x.id }}')">
+      🗑 Remove from Wishlist
+    </button>
+  </div>
+  {% endfor %}
+  {% else %}
+  <p>Your wishlist is empty. Browse products and add them to your wishlist!</p>
+  {% endif %}
+</div>
+
+<script>
+  function removeFromWishlist(productId) {
+    fetch(`/remove-from-wishlist/${productId}/`, {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}', // Ensure CSRF token is available
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert('Product removed from wishlist!');
+        location.reload(); // Refresh the page to update the wishlist
+      } else {
+        alert('Failed to remove from wishlist: ' + (data.error || 'Unknown error'));
+      }
+    })
+    .catch(error => console.error('Error:', error));
+  }
+</script>
+
+<style>
+.card {
+  display: inline-block;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;
+}
+.card img {
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #ccc;
+}
+.card h3 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+  color: #333;
+}
+.card p {
+  margin: 0;
+  font-size: 16px;
+  color: #666;
+}
+.remove-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.remove-button:hover {
+  background-color: #c0392b;
+}
+</style>
+
+{% endblock body %}

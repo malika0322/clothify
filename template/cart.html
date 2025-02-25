@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load cart_filters %}
+
+{% block title %}Your Cart{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="cart-heading-container">
+                <h2 class="cart-heading" style="text-align:center ;">Your Cart</h2>
+            </div>
+            
+
+            <div class="card shadow-lg p-4">
+                <ul class="list-group">
+                    {% for item in cart_products %}
+                        <li class="list-group-item d-flex justify-content-end align-items-center text-end">
+                            <div class="me-3">
+                                <h5>{{ item.product.product_name }}</h5>
+                                
+                                <p>Quantity: {{ item.quantity }}</p>
+                                <p>Price: {{ item.product.product_price }}</p>
+                                <p>Total: {{ item.quantity|multiply:item.product.product_price }}</p>
+                            </div>
+                            <img src="{{ item.product.product_image.url }}" 
+                                 alt="{{ item.product.product_name }}" 
+                                 style="width: 150px; height: 150px; object-fit: cover;" 
+                                 class="ms-3">
+                                 <form action="{% url 'update_cart' %}" method="post" class="d-inline ms-3" id="update-cart-form-{{ item.product.id }}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="product_id" value="{{ item.product.id }}">
+                                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{item.product.stock}}" class="form-control d-inline w-auto quantity-input" data-product-id="{{ item.product.id }}">
+                                </form>
+                                 
+                            <a href="{% url 'remove_from_cart' item.product.id %}" class="btn btn-danger btn-sm ms-3">Remove</a>
+                        </li>
+                    {% empty %}
+                        <p>Your cart is empty.</p>
+                    {% endfor %}
+                </ul>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <h4>Total: Rs{{ total_price }}</h4>
+                    <a href="{% url 'checkout' 0 %}" class="btn btn-primary">Proceed to Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.querySelectorAll('.quantity-input').forEach(input => {
+    input.addEventListener('change', function() {
+        const form = this.closest('form');
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Optionally update the total price or other elements on the page
+                console.log('Cart updated successfully');
+            } else {
+                console.error('Failed to update cart');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+});
+</script>
+{% endblock %}
+{% block extra_styles %}
+<style>
+
+
+  /* Styling for the heading */
+    .cart-heading-container {
+    display: flex;
+    justify-content: center; /* Horizontally centers */
+    align-items: center; /* Vertically centers */
+    margin-bottom: 30px;
+    }
+    .cart-heading {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    }
+
+
+    /* Styling the card */
+    .card {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    /* Styling list group items */
+    .list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        border: none;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* Product image styling */
+    .product-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    /* Total and checkout button alignment */
+    .d-flex {
+        padding-top: 20px;
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        padding: 10px 20px;
+    }
+</style>
+{% endblock extra_styles %}

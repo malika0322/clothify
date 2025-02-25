@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% block body %}
+{% load mathfilters %}
+
+<style>
+  .checkout-container {
+      width: 70%;
+      margin: 30px auto;
+      padding: 20px;
+      border: 2px solid #ccc;
+      border-radius: 20px;
+      background-color: #f9f9f9;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .checkout-title {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+  }
+
+  .checkout-item {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 15px;
+  }
+
+  .checkout-item img {
+      max-width: 100px;
+      height: auto;
+      border-radius: 10px;
+      margin-left: 20px;
+  }
+
+  .checkout-item-details {
+      text-align: right;
+  }
+
+  .checkout-item-name {
+      font-size: 1.5rem;
+      margin: 0;
+      color: #333;
+  }
+
+  .checkout-item-price,
+  .checkout-item-quantity,
+  .checkout-item-each-total {
+      font-size: 1.1rem;
+      color: #555;
+      margin: 5px 0;
+  }
+
+  .checkout-item-each-total {
+      color: tomato;
+  }
+
+  .checkout-summary-container {
+      text-align: right;
+  }
+
+  .checkout-summary span {
+      font-weight: bold;
+      color: tomato;
+  }
+
+  .checkout-btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      font-size: 1.5rem;
+      text-align: center;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+  }
+
+  .checkout-btn:hover {
+      background-color: #218838;
+  }
+  .input-wide {
+      width: 100%; /* Makes the input field span the entire width */
+      padding: 10px;
+      font-size: 1rem;
+      max-width: 100%; /* Prevents input from overflowing */
+  }
+</style>
+
+<div class="checkout-container">
+    <h1 class="checkout-title">Check Out</h1>
+    {% for x in cart_products %}
+    <div class="checkout-item">
+        <img src="/media/{{ x.product.product_image }}" alt="{{ x.product.product_name }}">
+        <div class="checkout-item-details">
+            <h2 class="checkout-item-name">{{ x.product.product_name }} </h2>
+            <p class="checkout-item-quantity">Quantity: {{ x.quantity }}</p>
+            <p class="checkout-item-price">Rs. {{ x.product.product_price }}</p>
+            <p class="checkout-item-each-total">Total: Rs. {{ x.quantity|mul:x.product.product_price }}</p>
+        </div>
+    </div>
+    {% endfor %}
+    
+    <div class="checkout-summary-container">
+        <h3 class="checkout-summary">Total Rs. <span>{{ total_price }}</span></h3>
+        <form method="post">
+            {% csrf_token %}
+            
+            <!-- Size Option -->
+        <div class="size-option-container" style="text-align: left; margin-bottom: 20px;">
+            <label for="size-option" style="display: inline-block; margin-bottom: 10px;">Choose Size</label>
+            <br><br>
+            <select id="size-option" class="dropdown" name="size_option" style="display: inline-block; margin-left: 10px;" onchange="toggleSizeInputs()">
+                <option value="standard">Standard</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+        <hr>
+        <div>
+            <input type="text" name="address" 
+                   style="text-align: left; direction: ltr; unicode-bidi: normal;">
+            <label for="address">ADDRESS</label>
+        </div>
+        <hr>
+        
+        <!-- Standard Size Options -->
+        <div id="standard-size-container" style="text-align: left; display: block; margin-bottom: 20px;">
+            <label for="standard-size">Select Standard Size</label>
+            <br><br>
+            <select id="standard-size" name="standard_size" style="display: inline-block; margin-left: 10px;">
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+            </select>
+        </div>
+
+        <!-- Custom Size Input -->
+        <div id="custom-size-container" style="text-align: left; display: none; margin-bottom: 50px;">
+            <label for="custom-size">Enter Custom Size</label>
+            <br><br>
+            <input type="text" id="custom-size" name="custom_size" 
+                style="text-align: left; direction: ltr; unicode-bidi: normal;" 
+                placeholder="e.g., b-ub-w-h" disabled>
+        </div>
+
+
+
+            
+
+            <!-- Payment Method -->
+            <label for="payment-method">Choose Payment Method</label>
+            <br><br>
+            <select id="payment-method" class="dropdown" name="method">
+                <option value="cod">Cash on Delivery</option>
+                <option value="esewa">eSewa</option>
+            </select>
+            <button type="submit" class="checkout-btn">Place Order</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function toggleSizeInputs() {
+        const sizeOption = document.getElementById('size-option').value;
+        const standardSizeContainer = document.getElementById('standard-size-container');
+        const customSizeContainer = document.getElementById('custom-size-container');
+        const standardSize = document.getElementById('standard-size');
+        const customSize = document.getElementById('custom-size');
+
+        if (sizeOption === 'standard') {
+            standardSizeContainer.style.display = 'block';
+            customSizeContainer.style.display = 'none';
+            standardSize.disabled = false;
+            customSize.disabled = true;
+        } else {
+            standardSizeContainer.style.display = 'none';
+            customSizeContainer.style.display = 'block';
+            standardSize.disabled = true;
+            customSize.disabled = false;
+        }
+    }
+</script>
+
+{%endblock %}

@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us{% endblock title %}
+
+{% block body %}
+<style>
+/* General styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fefbf6; /* Cream background */
+    color: #333;
+}
+
+/* Full-page About Us Section */
+.about-us {
+    max-width: 1100px; /* Increased width */
+    margin: 4rem auto;
+    padding: 2rem;
+    background-color: transparent;
+    color: #444;
+    text-align: left; /* Aligning all text to the left */
+}
+
+/* Title Styling */
+.about-us h1 {
+    font-size: 3rem; /* Larger font size */
+    color: #8b4513; /* Brown color for the title */
+    margin-bottom: 2rem;
+    text-align: center; /* Aligning title to the left */
+}
+
+/* General Text Styling */
+.about-us p {
+    font-size: 1.4rem; /* Increased font size */
+    line-height: 1.8;
+    margin-bottom: 2rem; /* More spacing between paragraphs */
+    color: #666;
+    text-align: left;
+}
+
+/* "Our Commitment" Section */
+.commitment-section {
+    background-color: #f0f0f0;
+    padding: 2.5rem; /* Slightly larger padding */
+    border-radius: 8px;
+    margin-top: 3rem;
+}
+
+.commitment-section h3 {
+    font-size: 2.5rem; /* Larger font size */
+    color: #8b4513; /* Brown color */
+    margin-bottom: 1.5rem;
+}
+
+.commitment-section ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.commitment-section li {
+    font-size: 1.4rem; /* Increased font size */
+    line-height: 1.8;
+    color: #666;
+    margin-bottom: 1rem; /* More spacing between list items */
+}
+
+/* Designer Information Section */
+.designer-section {
+    margin-top: 2rem;
+}
+
+.designer-section p {
+    font-size: 2rem; /* Larger font size */
+    color: #8b4513; /* Brown color for the title */
+    margin-bottom: 2rem;
+    text-align: center;
+}
+</style>
+
+<section class="about-us">
+    <h1>About Us</h1>
+
+    <p>Our gowns are designed to embody elegance, sophistication, and grace. Each piece is a work of art, crafted with precision and passion by artisans who pour their hearts into every stitch</p>
+    
+    <p>The handcrafted nature of our gowns ensures a high level of detail, with each gown being uniquely made to fit the individual. From the selection of luxurious fabrics to the intricate design process, every step is carefully executed to create timeless pieces that exude beauty and confidence</p>
+    
+    <p>We aim to bring a personalized experience to every client, understanding that no two individuals are alike. Our gowns are customizable, allowing our clients to feel truly special in a creation that’s tailored just for them, reflecting their personality, style, and uniqueness</p>
+    
+    <p>With an emphasis on quality, durability, and craftsmanship, our gowns are not only visually stunning but also durable, ensuring that each piece remains a cherished part of the client's wardrobe for years to come. We believe in creating heirloom pieces that stand the test of time, both in terms of design and craftsmanship</p>
+
+    <div class="designer-section">
+        <p>Designed by: <strong>Malika Budhathoki</strong></p>
+    </div>
+
+    <div class="commitment-section">
+        <h3>Our Commitment</h3>
+        <ul>
+            <li>Handcrafted gowns designed to make you feel unique and confident</li>
+            <li>Luxurious fabrics selected for their beauty, quality, and comfort</li>
+            <li>Customized fittings to ensure every gown fits perfectly</li>
+            <li>Timeless designs that reflect your personal style</li>
+        </ul>
+    </div>
+</section>
+
+{% endblock body %}

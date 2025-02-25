@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}shop{% endblock title %}
+{% block body %} 
+<script>
+  function addToWishlist(productId) {
+    fetch(`/add-to-wishlist/${productId}/`, {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}', // Ensure CSRF token is available
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert('Product added to wishlist!');
+        } else {
+          alert('Failed to add to wishlist: ' + (data.error || 'Unknown error'));
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  }
+</script>
+<div class="product-section" style="padding: 20px; text-align: center;">
+  {% for x in products %}
+  <div class="card" style="display: inline-block; margin: 10px; border: 1px solid #ccc; border-radius: 5px; width: 300px;">
+    <a href="{% url 'product_overview' x.id %}">
+    <img src="/media/{{ x.product_image }}" alt="{{ x.product_name }}" style="width: 100%; height: auto; border-bottom: 1px solid #ccc;">
+    </a>
+    <div style="padding: 10px;">
+      <h3>{{ x.product_name }}</h3>
+      <p>Rs.{{ x.product_price }}</p>
+    </div>
+    <!-- Fixed Like Button -->
+    <button class="like-button" onclick="addToWishlist('{{ x.id }}')">
+      
+    <span class="heart-icon" style=" font-size: 40px;">&#9829;</span>
+    </button>
+  </div>
+  {% endfor %}
+</div>
+<style>
+  .like-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background-color: #fff;
+    border: none;
+    color: #444;
+    font-size: 16px;
+  }
+  .like-button:hover {
+    color: #e74c3c;
+  }
+  </style>
+{% endblock body %}

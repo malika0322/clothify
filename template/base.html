@@ -1,0 +1,321 @@
+
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" integrity="sha384-dpuaG1suU0eT09tx5plTaGMLBsfDLzUCCUXOY2j/LSvXYuG6Bqs43ALlhIqAJVRb" crossorigin="anonymous">
+
+    <!-- Google Fonts (Cursive Font) -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+    <title>{%block title%} {%endblock title%} clothify</title>
+
+
+    <style>
+ 
+      .navbar-brand {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem; /* Decrease this value to reduce the font size */
+  font-family: 'Pacifico', cursive; /* Cursive font */
+  color: #5a2f11; /* Brown color */
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+}
+
+.navbar-brand:hover {
+  color: hsl(336, 40%, 77%); /* Darker shade on hover */
+  transform: translateX(-50%) scale(1.1); /* Slightly scale up on hover */
+}
+
+.navbar-nav .nav-link i {
+  font-size: 2rem; /* Increase the size of the icons */
+  color: #472208; /* Match the brand's brown color */
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover i {
+  color: #4b270d; /* Slightly darker shade on hover */
+}
+      .search-bar {
+        position: absolute;
+        right: 0;
+      }
+    </style>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <!-- Right Search Form (corner) -->
+        <form class="d-flex me-3" role="search" action="{% url 'home' %}">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" style="text-align: left; direction: ltr; unicode-bidi: normal;">
+          <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+        </form>  </form>
+
+        <nav class="navbar dark p-2 bg-body-tertiary shadow-lg">
+          <div class="container-fluid">
+            <!-- <a class="navbar-brand">Recipes</a>
+            <form class="d-flex" role="search"> -->
+          {% if request.user.is_authenticated %}
+            <a href="/logout/" class="btn btn-outline-danger" type="submit" style="color: #5a2f11;">logout</a>
+          {% else %}
+            <a href="/login/" class="btn btn-outline-success" type="submit" style="color: #5a2f11;">login</a>
+          {% endif %}
+
+
+            </form>
+          </div>
+        </nav>
+
+          
+        <!-- Centered Navbar Brand -->
+        <a class="navbar-brand" href="#">clothify</a>
+
+        <!-- Right Navigation Items -->
+        <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">
+              <i class="fas fa-home"></i>
+            </a>
+          </li>
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="/shop/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-store"></i>
+            </a>
+            <ul class="dropdown-menu">
+              {% for x in categories %} 
+              <li><a class="dropdown-item" href="{% url 'shop' x.name %}" style="text-align: left;">{{x.name}}</a></li>
+              {% endfor %} 
+              <li><hr class="dropdown-divider"></li>
+              
+            </ul>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/contact/"><i class="fas fa-envelope"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i></a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'order_page' %}"><i class="fas fa-truck"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'wishlist' %}"> <i class="fas fa-heart"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/aboutus/">
+              <i class="fas fa-info-circle"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    {% include 'messages/message.html' %}
+    {%block body%} {%endblock body%}
+    
+    <!-- Optional JavaScript; choose one of the two! -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
+<head>
+  <title>Clothify Footer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      line-height: 1.5;
+      box-sizing: border-box;
+    }
+  
+    .footer {
+      background-color: #24262b;
+      padding: 60px 20px;
+      color: #bbbbbb;
+      
+     
+    }
+
+    .footer .container {
+      max-width: 1170px;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      width: 100%; 
+    }
+
+    .footer .footer-col {
+      width: 22%;
+      margin-bottom: 20px;
+    }
+
+    .footer .footer-col h4 {
+      font-size: 18px;
+      color: #ffffff;
+      margin-bottom: 20px;
+      position: relative;
+      text-transform: capitalize;
+      font-weight: 500;
+    }
+
+    .footer .footer-col h4::before {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background-color: #e91e63;
+    }
+
+    .footer ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer ul li a {
+      text-decoration: none;
+      color: #bbbbbb;
+      transition: all 0.3s ease;
+    }
+
+    .footer ul li a:hover {
+      color: #ffffff;
+      padding-left: 8px;
+    }
+
+    .footer .social-links {
+      display: flex;
+      gap: 10px;
+    }
+
+    .footer .social-links a {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      color: #ffffff;
+      transition: all 0.3s ease;
+    }
+
+    .footer .social-links a:hover {
+      background: #ffffff;
+      color: #24262b;
+    }
+
+    .footer .subscribe-form {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer .subscribe-form input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .footer .subscribe-form button {
+      padding: 10px 20px;
+      background-color: #e91e63;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .footer .subscribe-form button:hover {
+      background-color: #ffffff;
+      color: #e91e63;
+    }
+
+    @media (max-width: 768px) {
+      .footer .footer-col {
+        width: 48%;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .footer .footer-col {
+        width: 100%;
+      }
+
+      .footer .subscribe-form {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<footer class="footer">
+  <div class="container">
+    <!-- Company Section -->
+    <div class="footer-col">
+      <h4>Clothify</h4>
+      <ul>
+        <li><a href="{% url 'aboutus' %}">About Us</a></li>
+        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+    
+      </ul>
+    </div>
+
+    <!-- Get Help Section -->
+    <div class="footer-col">
+      <h4>Get Help</h4>
+      <ul>
+        <li><a href="{% url 'faqs' %}">FAQs</a></li>
+        <li><a href="{% url 'policy' %}">Returns</a></li>
+
+      </ul>
+    </div>
+
+    <!-- Social Links Section -->
+    <div class="footer-col">
+       <h4>     Follow Us</h4>
+      <div class="social-links">
+        <a href="https://www.facebook.com/malika.budhathoki.94"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.pinterest.com/budhathokimalika/"><i class="fab fa-pinterest"></i></a>
+        <a href="https://www.instagram.com/malika_budhathoki/"><i class="fab fa-instagram"></i></a>
+        <a href="https://github.com/malika0322"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+    
+  </div>
+</footer>
+
+</body>
+</html>

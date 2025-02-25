@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}Login{% endblock title %}
+
+{% block body %}
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card shadow-lg p-4" style="width: 500px; border-radius: 10px;"> <!-- Card width and rounded corners -->
+        <h2 class="mb-4 text-end" style="font-weight: bold;">Login</h2> <!-- Align title to the right -->
+        <form method="post" class="form-group">
+            {% csrf_token %}
+            <div class="mb-3 text-end"> <!-- Align form elements to the right -->
+                <label for="username" class="form-label">Username</label>
+                <input 
+                    type="text" 
+                    name="username" 
+                    id="username" 
+                    class="form-control" 
+                    type="text" placeholder="Enter your username" style="text-align: left;" required>
+            </div>
+            <div class="mb-3 text-end"> <!-- Align form elements to the right -->
+                <label for="password" class="form-label">Password</label>
+                <input 
+                    type="password" 
+                    name="password" 
+                    id="password" 
+                    class="form-control" 
+                    type="text" placeholder="Enter your password"  style="text-align: left;" required>
+                    
+            </div>
+            <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-success btn-block" style="padding: 12px;">Login</button>
+            </div>
+            <p class="text-end" style="font-size: 14px;">
+                Don't have an account? 
+                <a href="/register" class="text-decoration-none text-primary">Create one here</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+<style>
+    .container {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+    
+    .card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn {
+        font-size: 16px;
+        text-transform: uppercase;
+    }
+
+    .form-label {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .form-control {
+        font-size: 14px;
+        padding: 12px;
+    }
+</style>
+
+{% endblock body %}

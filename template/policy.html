@@ -1,0 +1,49 @@
+{% extends 'base.html' %} 
+{% load static %} <!-- Ensures the static tag works -->
+
+{% block title %}Return Policy{% endblock title %}
+
+{% block body %}
+<main style="padding: 40px 20px; text-align: left;">
+    <section class="return-policy">
+        <h1 style="font-size: 2em; color: #6C4F37; margin-bottom: 20px;">Return & Exchange Policy</h1>
+        <p>We are happy to help with returns or exchanges Please read our policy below for more information</p>
+
+        <div class="policy-section" style="margin-bottom: 30px;">
+            <h2 style="font-size: 1.5em; color: #6C4F37; margin-bottom: 10px;">Eligibility for Return</h2>
+            <p>Items can be returned within 30 days of purchase, provided they are in unused, unwashed condition, with all original tags still attached If an item is faulty or damaged, we will accept a return or exchange</p>
+        </div>
+
+        <div class="policy-section" style="margin-bottom: 30px;">
+            <h2 style="font-size: 1.5em; color: #6C4F37; margin-bottom: 10px;">How to Return</h2>
+            <p>To initiate a return, please contact our customer service at <a href="mailto:support@clothify.com" style="color: #6C4F37;">budhathokimalika@gmail.com</a> with your order details We will provide you with a return label and instructions</p>
+        </div>
+
+        <div class="policy-section" style="margin-bottom: 30px;">
+            <h2 style="font-size: 1.5em; color: #6C4F37; margin-bottom: 10px;">Refunds</h2>
+            <p>Refunds will be processed to the original method of payment within 7-10 business days after the returned item is received and inspected</p>
+        </div>
+
+        <div class="policy-section" style="margin-bottom: 30px;">
+            <h2 style="font-size: 1.5em; color: #6C4F37; margin-bottom: 10px;">Exchanges</h2>
+            <p>If you wish to exchange an item, we will process your new item as soon as we receive the original product in return condition</p>
+        </div>
+
+        <div class="policy-section" style="margin-bottom: 30px;">
+            <h2 style="font-size: 1.5em; color: #6C4F37; margin-bottom: 10px;">Non-Returnable Items</h2>
+            <p>Gift cards, sale items, and items marked as final sale are not eligible for return or exchange</p>
+        </div>
+    </section>
+</main>
+
+<footer style="background-color: #fff; padding: 20px; text-align: center; box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);">
+    <p>&copy; 2024 Clothify | All rights reserved</p>
+</footer>
+
+<script>
+    // Example JavaScript to handle any interactive elements if needed
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log("Return Policy Page Loaded");
+    });
+</script>
+{% endblock body %}

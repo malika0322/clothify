@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us{% endblock title %}
+
+{% block body %}
+<div style="margin: 0; padding: 0; overflow: hidden; position: relative;">
+  <!-- Full-Screen Background Image -->
+  <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" style="width: 100vw; height: 100vh; position: relative;">
+    <div class="carousel-inner" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+      <!-- Background Image -->
+      <div class="carousel-item active" style="width: 100%; height: 100%;">
+        <img src="/static/bg.jfif.avif" 
+             alt="Contact Background" 
+             style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; object-fit: cover;">
+      </div>
+    </div>
+  </div>
+
+  <!-- Centered Content Section -->
+  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255, 255, 255, 0.9); border-radius: 10px; padding: 40px; max-width: 600px; width: 100%; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
+    <h1 style="font-size: 36px; font-weight: bold; color: #333; margin-bottom: 20px;">Get in Touch</h1>
+    
+    <!-- Contact Form -->
+    <form action="{% url 'contact' %}" method="POST">
+      {% csrf_token %}
+      <div class="mb-3">
+        <input type="text" name="name" class="form-control" placeholder="Your Name" required style="text-align: left;">
+      </div>
+      <div class="mb-3">
+        <input type="email" name="email" class="form-control" placeholder="Your Email" required style="text-align: left;">
+      </div>
+      <div class="mb-3">
+        <textarea name="message" class="form-control" placeholder="Your Message" rows="5" required style="text-align: left;"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 100%; background: #a67c52; border: none; font-size: 18px; padding: 10px 0;">Send Message</button>
+    </form>
+  </div>
+</div>
+{% endblock body %}

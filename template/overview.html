@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+{% load static %} <!-- Ensures the static tag works -->
+
+{% block title %}Overview{% endblock title %}
+
+{% block body %}
+<style>
+/* General styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fefbf6; /* Cream background */
+    color: #333;
+}
+
+/* Product Overview Section */
+.product-overview {
+    display: flex;
+    flex-wrap: wrap-reverse; /* Swaps the order of flex items */
+    max-width: 1200px;
+    margin: 2rem auto;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    gap: 2rem;
+}
+
+/* Product Image Styling */
+.product-image {
+    flex: 1;
+    max-width: 600px;
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* Product Details Styling */
+.product-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem;
+    text-align: left; /* Ensures text is aligned to the left */
+}
+
+.product-details h1 {
+    font-size: 2rem;
+    color: #8b4513; /* Brown for title */
+    margin-bottom: 1rem;
+}
+
+.product-details .price {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin: 1rem 0;
+}
+
+/* Description Styling */
+.product-details .description {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 1.5rem;
+    padding: 0; /* Removed padding for better left alignment */
+    text-align: left; /* Aligned text to left */
+}
+
+/* Additional Features (e.g., links and buttons) */
+.product-details .options {
+    margin-bottom: 1rem;
+}
+
+.product-details a {
+    color: #8b4513;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.product-details a:hover {
+    text-decoration: underline;
+}
+
+/* Button Styling */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #8b5e34; /* Rich brown color */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #a67d4a; /* Lighter brown for hover */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .product-overview {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .product-image {
+        margin-bottom: 1.5rem;
+    }
+
+    .product-details {
+        text-align: center;
+    }
+}
+
+/* Modal Styles */
+#sizeChartModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 90%;
+    text-align: center;
+}
+
+#sizeChartModal img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 8px;
+}
+
+#sizeChartModal #closeModal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+}
+</style>
+
+<section class="product-overview">
+    <div class="product-details">
+        <h1>{{ products.product_name }}</h1>
+        <p class="price">Rs. {{ products.product_price }}</p>
+        <p class="stock">Stock>{{ products.stock }}</p>
+        <p class="description">{{ products.product_description }}</p>
+        <!-- <div class="options">
+            <p>Choose Option</p>
+            <label><input type="radio" name="size" value="standard"> Standard Size</label><br>
+            <label><input type="radio" name="size" value="custom"> Custom Size</label>
+        </div> -->
+        <a href="#" id="seeChart">See Size Chart</a>
+    </br></br>
+   
+
+    {% if products.stock > 0 %}
+        <a href="{% url 'add_to_cart' products.id %}">
+        <button id=add-cart type="button" class="btn">ADD TO CART</button>
+        </a> 
+        {% else %}
+            <p style="color: red; font-weight: bold;">SOLD OUT</p>
+        {% endif %}
+
+
+      
+    </div>
+
+    <div class="product-image">
+        <img src="/media/{{ products.product_image }}" alt="{{ products.product_name }}">
+    </div>
+</section>
+
+<!-- Modal for Size Chart -->
+<div id="sizeChartModal">
+    <span id="closeModal">&times;</span>
+    <img src="{% static 'size-chart.png' %}" alt="Size Chart">
+</div>
+
+<script>
+document.getElementById('seeChart').addEventListener('click', function (e) {
+    e.preventDefault();
+    document.getElementById('sizeChartModal').style.display = 'block';
+});
+
+document.getElementById('closeModal').addEventListener('click', function () {
+    document.getElementById('sizeChartModal').style.display = 'none';
+});
+</script>
+
+
+{% endblock body %}

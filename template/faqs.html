@@ -1,0 +1,151 @@
+
+{% extends 'base.html' %}
+    {% load static %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #fff;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    header h1 {
+      font-size: 24px;
+      margin: 0;
+    }
+
+    .faq-container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .faq-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .faq {
+      margin-bottom: 15px;
+    }
+
+    .faq h3 {
+      text-align: left;
+      font-size: 18px;
+      cursor: pointer;
+      margin: 0;
+      padding: 10px;
+      background: #f4f4f4;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .faq h3:hover {
+      text-align: left;
+      background: #e9e9e9;
+    }
+
+    .faq p {
+        text-align: left;
+      display: none;
+      margin: 0;
+      padding: 10px;
+      border-left: 2px solid #e91e63;
+      background: #fafafa;
+    }
+
+    .footer {
+      background-color: #24262b;
+      color: #bbbbbb;
+      padding: 20px;
+      
+      margin-top: 30px;
+    }
+
+    .footer a {
+      color: #e91e63;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+
+
+<div class="faq-container">
+  <h2>Frequently Asked Questions</h2>
+
+  <div class="faq">
+    <h3>WHEN CAN I EXPECT MY ORDER TO ARRIVE</h3>
+    <p>Kindly be informed that each gown is crafted to order, thus it typically takes three to eight weeks for delivery after your purchase, inclusive of production time, delivery, handling, and any other necessary processing procedures. However, during high-volume sales events, there may be a delay in the delivery timeline</p>
+  </div>
+
+  <div class="faq">
+    <h3>IS THERE AN OPTION FOR EXPEDITED DELIVERY OF MY ORDER</h3>
+    <p>For those who require quicker processing, select dresses may be available with expedited shipping options. Simply choose the desired shipping option at checkout</p>
+  </div>
+
+  <div class="faq">
+    <h3>WHICH DELIVERY SERVICE DO YOU UTILIZE</h3>
+    <p>Our products are dispatched globally via DHL Express courier service.</p>
+  </div>
+
+  <div class="faq">
+    <h3>ARE IMPORT TAXES AND DUTIES INCLUDED IN THE PRICES</h3>
+    <p>It is important to note that all orders may include customs duties, which are dependent on the recipient's country of residence. These fees are not covered by Teuta Matoshi and will be collected by DHL upon the arrival of your order in customs. In order for your package to be released, it is necessary to pay any applicable customs duties</p>
+  </div>
+
+  <div class="faq">
+    <h3>HOW CAN I REACH YOU ABOUT MY ORDER</h3>
+    <p>If you have questions about your order, the best way to reach us is by sending an email to budhathokimalika@gmail.com. We will respond to your inquiry as soon as possible</p>
+  </div>
+
+  <div class="faq">
+    <h3>WHAT IS THE RETURN POLICY</h3>
+    <p>At Clothify, we offer both standard size and custom size dresses and other items. For standard size items, we accept returns within 7 days of delivery for unworn and unused products. All shipping charges are non-refundable and the initial shipping cost will not be included in the refund of the purchase price. Custom size and customized items are not eligible for returns or exchanges due to their made-to-order nature</p>
+  </div>
+
+  <div class="faq">
+    <h3>IS THERE A DELAY IN PROCESSING FOR “CUSTOM SIZE” ORDERS</h3>
+    <p>At Clothify, we take pride in handcrafting each gown to perfection. The time it takes for both standard and custom size gowns to be delivered is approximately the same, with a range of three to eight weeks from the date of purchase. This delivery timeline may vary based on the shipping option selected at checkout</p>
+  </div>
+</div>
+
+
+
+<script>
+  document.querySelectorAll('.faq h3').forEach(faqTitle => {
+    faqTitle.addEventListener('click', () => {
+      const faqContent = faqTitle.nextElementSibling;
+      faqContent.style.display = faqContent.style.display === 'block' ? 'none' : 'block';
+    });
+  });
+</script>
+
+</body>
+</html>
+{% endblock body %}
